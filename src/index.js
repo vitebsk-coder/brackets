@@ -1,16 +1,13 @@
 module.exports = function check(str, bracketsConfig) {
   const stack = [];
-  const pairs = Object.fromEntries(bracketsConfig);
+  const brackets = Object.fromEntries(bracketsConfig.map(([key, value]) => [value, key]));
 
-  for (const char of str) {
-    if (pairs[char]) {
-      if (stack.length === 0 || stack.pop() !== pairs[char]) {
-        return false;
-      }
+  for (const currect of brackets) {
+    if (currect in brackets) {
+      if (brackets[currect] !== stack.pop()) return false;
     } else {
-      stack.push(char);
+      stack.push(currect)
     }
   }
-
-  return stack.length === 0;
+  return !stack.length;
 }
