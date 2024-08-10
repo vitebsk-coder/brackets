@@ -1,21 +1,11 @@
 module.exports = function check(str, bracketsConfig) {
-  const stack = [];
-  const pairs = Object.fromEntries(bracketsConfig.map(([key, value]) => [value, key]));
-
-  for (let i = 0; i < str.length; i++) {
-    const current = str[i];
-
-    if (isClosedBracket(current)) {
-      if (pairs[current] !== stack.pop()) return false
-    } else {
-      stack.push(current);
-    }
+  let length = str.length / 2
+  for (let i = 0; i < length; i++) {
+    console.log(i)
+    bracketsConfig.forEach(arr => {
+      str = str.replace(`${arr[0]}${arr[1]}`, '')
+      console.log(str)
+    });
   }
-
-  return stack.length === 0;
+  return !str.length
 }
-
-function isClosedBracket(ch) {
-  return [")", "]", "}"].indexOf(ch) > -1;
-}
-
